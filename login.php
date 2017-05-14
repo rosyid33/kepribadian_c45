@@ -1,3 +1,20 @@
+<?php
+session_start();
+if ( isset($_SESSION['kepribadian_c45_id']) ) {
+    header("location:index.php");
+}
+
+$login = 0;
+if (isset($_GET['login'])) {
+    $login = $_GET['login'];
+}
+
+if ($login == 1) {
+    $komen = "Silahkan Login Ulang, Cek username dan Password Anda!!";
+}
+
+include_once "fungsi.php";
+?>
 <!--
 Au<!--
 Author: W3layouts
@@ -54,6 +71,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="main-agileits">
                     <div class="form-w3agile">
                         <h3>PLEASE LOGIN</h3>
+                        <?php
+                        if (isset($komen)) {
+                            display_error("Login failed");
+                        }
+                        ?>
                         <form action="cek-login.php" method="post">
                             <div class="key">
                                 <i class="fa fa-user" aria-hidden="true"></i>
