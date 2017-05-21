@@ -179,7 +179,7 @@ function pembentukan_tree($db_object, $N_parent, $kasus) {
             //usia terpilih
             if ($atribut == "usia") {
                 //jika nilai atribut 3
-                if($jmlInstansi==3){
+                if($jmlUsia==3){
                     //hitung rasio
                     $cabang = array();
                     $cabang = hitung_rasio($db_object, $kondisi , 'usia',$max_gain,$nilai_usia[0],$nilai_usia[1],$nilai_usia[2],'','');
@@ -187,7 +187,7 @@ function pembentukan_tree($db_object, $N_parent, $kasus) {
                     proses_DT($db_object, $kondisi , "($atribut='$cabang[0]')","($atribut='$exp_cabang[0]' OR $atribut='$exp_cabang[1]')");						
                 }
                 //jika nilai atribut 2
-                else if($jmlInstansi==2){
+                else if($jmlUsia==2){
                     proses_DT($db_object, $kondisi , "($atribut='$nilai_usia[0]')" , "($atribut='$nilai_usia[1]')");
                 }
             }
