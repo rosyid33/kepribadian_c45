@@ -10,7 +10,6 @@ $db_object = new database();
     <div class="typo-w3">
         <div class="container">
             <h2 class="tittle">Pohon Keputusan</h2>
-
 <?php
 
 if(isset($_GET['act'])){
@@ -22,7 +21,6 @@ if(isset($_GET['act'])){
     }
 }
 
-
 $query=$db_object->db_query("select * from t_keputusan order by(id)");
 $jumlah=$db_object->db_num_rows($query);
 //jika pohon keputusan kosong
@@ -31,7 +29,7 @@ if($jumlah==0){
 }
 else{
     //hanya kaprodi yang bisa menghapus pohon keputusan dan menguji akurasi
-    if($_SESSION['gizibalita_c45_level']==1){
+    if($_SESSION['kepribadian_c45_level']==1){
 ?>
         <p>
             <a href="?menu=pohon_keputusan&act=delete" class="btn btn-danger" onClick="return confirm('Anda yakin akan hapus pohon keputusan?')">

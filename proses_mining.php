@@ -301,43 +301,43 @@ function jumlah_data($db_object, $kondisi) {
 //fungsi pemangkasan cabang
 function pangkas($db_object, $PARENT, $KASUS, $LEAF) {
     //PEMANGKASAN CABANG
-    $sql_pangkas = $db_object->db_query("SELECT * FROM t_keputusan "
-            . "WHERE parent=\"$PARENT\" AND keputusan=\"$LEAF\"");
-    $row_pangkas = $db_object->db_fetch_array($sql_pangkas);
-    $jml_pangkas = $db_object->db_num_rows($sql_pangkas);
+//    $sql_pangkas = $db_object->db_query("SELECT * FROM t_keputusan "
+//            . "WHERE parent=\"$PARENT\" AND keputusan=\"$LEAF\"");
+//    $row_pangkas = $db_object->db_fetch_array($sql_pangkas);
+//    $jml_pangkas = $db_object->db_num_rows($sql_pangkas);
     //jika keputusan dan parent belum ada maka insert
-    if ($jml_pangkas == 0) {
+//    if ($jml_pangkas == 0) {
         $sql_in = "INSERT INTO t_keputusan "
                 . "(parent,akar,keputusan)"
                 . " VALUES (\"$PARENT\" , \"$KASUS\" , \"$LEAF\")";
         $db_object->db_query($sql_in);
         // echo "1".$sql_in;
-    }
+//    }
     //jika keputusan dan parent sudah ada maka delete
-    else {
-        $db_object->db_query("DELETE FROM t_keputusan WHERE id='$row_pangkas[0]'");
-        $exPangkas = explode(" AND ", $PARENT);
-        $jmlEXpangkas = count($exPangkas);
-        $temp = array();
-        for ($a = 0; $a < ($jmlEXpangkas - 1); $a++) {
-            $temp[$a] = $exPangkas[$a];
-        }
-        $imPangkas = implode(" AND ", $temp);
-        $akarPangkas = $exPangkas[$jmlEXpangkas - 1];
-        $que_pangkas = $db_object->db_query("SELECT * FROM t_keputusan "
-                . "WHERE parent=\"$imPangkas\" AND keputusan=\"$LEAF\"");
-        $baris_pangkas = $db_object->db_fetch_array($que_pangkas);
-        $jumlah_pangkas = $db_object->db_num_rows($que_pangkas);
-        if ($jumlah_pangkas == 0) {
-            $sql_in2 = "INSERT INTO t_keputusan "
-                    . "(parent,akar,keputusan)"
-                    . " VALUES (\"$imPangkas\" , \"$akarPangkas\" , \"$LEAF\")";
-            $db_object->db_query($sql_in2);
-            //echo "2".$sql_in2;
-        } else {
-            pangkas($db_object, $imPangkas, $akarPangkas, $LEAF);
-        }
-    }
+//    else {
+//        $db_object->db_query("DELETE FROM t_keputusan WHERE id='$row_pangkas[0]'");
+//        $exPangkas = explode(" AND ", $PARENT);
+//        $jmlEXpangkas = count($exPangkas);
+//        $temp = array();
+//        for ($a = 0; $a < ($jmlEXpangkas - 1); $a++) {
+//            $temp[$a] = $exPangkas[$a];
+//        }
+//        $imPangkas = implode(" AND ", $temp);
+//        $akarPangkas = $exPangkas[$jmlEXpangkas - 1];
+//        $que_pangkas = $db_object->db_query("SELECT * FROM t_keputusan "
+//                . "WHERE parent=\"$imPangkas\" AND keputusan=\"$LEAF\"");
+//        $baris_pangkas = $db_object->db_fetch_array($que_pangkas);
+//        $jumlah_pangkas = $db_object->db_num_rows($que_pangkas);
+//        if ($jumlah_pangkas == 0) {
+//            $sql_in2 = "INSERT INTO t_keputusan "
+//                    . "(parent,akar,keputusan)"
+//                    . " VALUES (\"$imPangkas\" , \"$akarPangkas\" , \"$LEAF\")";
+//            $db_object->db_query($sql_in2);
+//            //echo "2".$sql_in2;
+//        } else {
+//            pangkas($db_object, $imPangkas, $akarPangkas, $LEAF);
+//        }
+//    }
     echo "Keputusan = " . $LEAF . "<br>================================<br>";
 }
 

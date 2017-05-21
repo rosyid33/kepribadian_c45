@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `data_hasil_klasifikasi`;
 
 CREATE TABLE `data_hasil_klasifikasi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(200) DEFAULT NULL,
+  `id_siswa` int(11) DEFAULT NULL,
   `jenis_kelamin` enum('L','P') DEFAULT NULL,
   `usia` int(11) DEFAULT NULL,
   `sekolah` varchar(100) DEFAULT NULL,
@@ -31,21 +31,11 @@ CREATE TABLE `data_hasil_klasifikasi` (
   `jawaban_c` int(11) DEFAULT NULL,
   `jawaban_d` int(11) DEFAULT NULL,
   `kelas_hasil` varchar(100) DEFAULT NULL,
-  `nilai_sanguin` double DEFAULT NULL,
-  `nilai_koleris` double DEFAULT NULL,
-  `nilai_melankolis` double DEFAULT NULL,
-  `nilai_plegmatis` double DEFAULT NULL,
+  `id_rule` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `data_hasil_klasifikasi` */
-
-insert  into `data_hasil_klasifikasi`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_hasil`,`nilai_sanguin`,`nilai_koleris`,`nilai_melankolis`,`nilai_plegmatis`) values 
-(1,'Aisyah Regina P','P',15,'Swasta',8,10,9,13,NULL,NULL,NULL,NULL,NULL),
-(2,'Emilia Nur Rohmah','P',13,'Negeri',10,4,14,12,NULL,NULL,NULL,NULL,NULL),
-(3,'Faris Saifullah','L',14,'Swasta',15,8,10,7,NULL,NULL,NULL,NULL,NULL),
-(4,'Rahmi Dwiki D.R','L',14,'Negeri',11,12,8,9,NULL,NULL,NULL,NULL,NULL),
-(5,'Husna Dhiya \'ul Ilmi','P',13,'Swasta',20,8,8,4,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `data_latih` */
 
@@ -169,6 +159,27 @@ insert  into `data_latih`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_
 (99,'Khodijah Febriyanti','P',13,'Negeri',12,8,11,9,'Sanguin'),
 (100,'Citra Tsabitan A','P',13,'Negeri',18,9,8,5,'Sanguin');
 
+/*Table structure for table `data_siswa` */
+
+DROP TABLE IF EXISTS `data_siswa`;
+
+CREATE TABLE `data_siswa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_siswa` varchar(200) DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') DEFAULT NULL,
+  `usia` int(11) DEFAULT NULL,
+  `sekolah` varchar(200) DEFAULT NULL,
+  `id_user` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+/*Data for the table `data_siswa` */
+
+insert  into `data_siswa`(`id`,`nama_siswa`,`jenis_kelamin`,`usia`,`sekolah`,`id_user`) values 
+(1,'Coba Siswa','L',15,'Swasta',2),
+(2,'coba coba','L',14,'Negeri',3),
+(7,'Coba siswa3','P',14,'Swasta',25);
+
 /*Table structure for table `data_soal` */
 
 DROP TABLE IF EXISTS `data_soal`;
@@ -242,21 +253,23 @@ CREATE TABLE `data_uji` (
   `jawaban_d` int(11) DEFAULT NULL,
   `kelas_asli` varchar(100) DEFAULT NULL,
   `kelas_hasil` varchar(100) DEFAULT NULL,
-  `nilai_sanguin` double DEFAULT NULL,
-  `nilai_koleris` double DEFAULT NULL,
-  `nilai_melankolis` double DEFAULT NULL,
-  `nilai_plegmatis` double DEFAULT NULL,
+  `id_rule` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `data_uji` */
 
-insert  into `data_uji`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_asli`,`kelas_hasil`,`nilai_sanguin`,`nilai_koleris`,`nilai_melankolis`,`nilai_plegmatis`) values 
-(1,'Aisyah Regina P','P',15,'Swasta',8,10,9,13,'Plegmatis',NULL,NULL,NULL,NULL,NULL),
-(2,'Emilia Nur Rohmah','P',13,'Negeri',10,4,14,12,'Melankolis',NULL,NULL,NULL,NULL,NULL),
-(3,'Faris Saifullah','L',14,'Swasta',15,8,10,7,'Sanguin',NULL,NULL,NULL,NULL,NULL),
-(4,'Rahmi Dwiki D.R','L',14,'Negeri',11,12,8,9,'Koleris',NULL,NULL,NULL,NULL,NULL),
-(5,'Husna Dhiya \'ul Ilmi','P',13,'Swasta',20,8,8,4,'Sanguin',NULL,NULL,NULL,NULL,NULL);
+insert  into `data_uji`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_asli`,`kelas_hasil`,`id_rule`) values 
+(1,'Mafaza Al-Aufa','L',13,'Swasta',5,7,15,13,'Melankolis','Plegmatis',4),
+(2,'Farhan Syah','L',13,'Swasta',8,13,8,11,'Koleris','Sanguin',11),
+(3,'Hilmi Tajudin','L',15,'Swasta',5,4,14,17,'Plegmatis','Plegmatis',4),
+(4,'Firyal Aqillah Tahaani','P',13,'Swasta',13,10,9,8,'Sanguin','Sanguin',5),
+(5,'Abidah Mukhlishoh','P',14,'Swasta',7,3,13,17,'Plegmatis','Sanguin',11),
+(6,'Moch. Yoland Pradana','L',13,'Negeri',6,16,4,14,'Koleris','Sanguin',11),
+(7,'Syifa Arrosyid','L',14,'Negeri',18,7,8,7,'Sanguin','Sanguin',5),
+(8,'Barkatul Mirojiah','P',14,'Negeri',13,9,7,11,'Sanguin','Sanguin',11),
+(9,'Tiara Rossabilla ','P',14,'Negeri',6,6,10,18,'Plegmatis','Plegmatis',1),
+(10,'Risma Dewi Septiawati','P',14,'Negeri',10,5,14,11,'Melankolis','Sanguin',11);
 
 /*Table structure for table `gain` */
 
@@ -303,7 +316,7 @@ CREATE TABLE `rasio_gain` (
   `cabang2` varchar(50) DEFAULT NULL,
   `rasio_gain` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `rasio_gain` */
 
@@ -350,13 +363,15 @@ CREATE TABLE `users` (
   `password` text,
   `level` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 /*Data for the table `users` */
 
 insert  into `users`(`id_user`,`nama`,`username`,`password`,`level`) values 
 (1,'Admin','admin','21232f297a57a5a743894a0e4a801fc3','1'),
-(2,'Siswa','siswa','bcd724d15cde8c47650fda962968f102','2');
+(2,'Siswa','siswa','bcd724d15cde8c47650fda962968f102','2'),
+(3,'Siswa2','siswa2','bcd724d15cde8c47650fda962968f102','2'),
+(25,'Coba siswa3','siswa3','df8e1ec27c47f2b8223d984f87aa571e','2');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
