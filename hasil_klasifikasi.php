@@ -69,6 +69,7 @@ include_once "fungsi.php";
                                 <th>Jawaban C</th>
                                 <th>Jawaban D</th>
                                 <th>Kelas Hasil</th>
+                                <th>Id rule</th>
                             </tr>
                             <?php
                             $no = 1;
@@ -84,6 +85,7 @@ include_once "fungsi.php";
                                 echo "<td>" . $row['jawaban_c'] . "</td>";
                                 echo "<td>" . $row['jawaban_d'] . "</td>";
                                 echo "<td>" . $row['kelas_hasil'] . "</td>";
+                                echo "<td>" . $row['id_rule'] . "</td>";
                                 echo "</tr>";
                                 $no++;
                             }
