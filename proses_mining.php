@@ -619,168 +619,6 @@ function hitung_entropy($nilai1, $nilai2, $nilai3, $nilai4) {
     return $entropy;
 }
 
-function klasifikasi($n_jenis_kelamin, $n_usia_bulan, $n_berat_badan, $n_tinggi_badan, $n_lingkar_kepala) {
-
-    $sql = mysql_query("SELECT * FROM t_keputusan");
-    $keputusan = "";
-    $id_rule = "";
-    while ($row = mysql_fetch_array($sql)) {
-        //menggabungkan parent dan akar dengan kata AND
-        if ($row[1] != '') {
-            $rule = $row[1] . " AND " . $row[2];
-        } else {
-            $rule = $row[2];
-        }
-        //mengubah parameter
-        $rule = str_replace("<=", " k ", $rule);
-        $rule = str_replace("=", " s ", $rule);
-        $rule = str_replace(">", " l ", $rule);
-        //mengganti nilai
-        $rule = str_replace("jenis_kelamin", "'$n_jenis_kelamin'", $rule);
-        $rule = str_replace("usia_bulan", "'$n_usia_bulan'", $rule);
-        $rule = str_replace("berat_badan", "'$n_berat_badan'", $rule);
-        $rule = str_replace("tinggi_badan", "'$n_tinggi_badan'", $rule);
-        $rule = str_replace("lingkar_kepala", "$n_lingkar_kepala", $rule);
-
-        //menghilangkan '
-        $rule = str_replace("'", "", $rule);
-        //		//menggabungkan kata ortu dan orang lain
-        //		$rule=str_replace("Orang Tua","OrangTua",$rule);
-        //		$rule=str_replace("Orang Lain","OrangLain",$rule);
-        //explode and
-        $explodeAND = explode(" AND ", $rule);
-        $jmlAND = count($explodeAND);
-        //menghilangkan ()
-        $explodeAND = str_replace("(", "", $explodeAND);
-        $explodeAND = str_replace(")", "", $explodeAND);
-        //deklarasi bol
-        $bolAND = array();
-        $n = 0;
-        while ($n < $jmlAND) {
-            //explode or
-            $explodeOR = explode(" OR ", $explodeAND[$n]);
-            $jmlOR = count($explodeOR);
-            //deklarasi bol
-            $bol = array();
-            $a = 0;
-            while ($a < $jmlOR) {
-                //pecah  dengan spasi
-                $exrule2 = explode(" ", $explodeOR[$a]);
-                $parameter = $exrule2[1];
-                if ($parameter == 's') {
-                    //pecah  dengan s
-                    $explodeRule = explode(" s ", $explodeOR[$a]);
-                    //nilai true false						
-                    if ($explodeRule[0] == $explodeRule[1]) {
-                        $bol[$a] = "Benar";
-                    } else if ($explodeRule[0] != $explodeRule[1]) {
-                        $bol[$a] = "Salah";
-                    }
-                } else if ($parameter == 'k') {
-                    //pecah  dengan k
-                    $explodeRule = explode(" k ", $explodeOR[$a]);
-                    //nilai true false
-                    if ($explodeRule[0] <= $explodeRule[1]) {
-                        $bol[$a] = "Benar";
-                    } else {
-                        $bol[$a] = "Salah";
-                    }
-                } else if ($parameter == 'l') {
-                    //pecah dengan s
-                    $explodeRule = explode(" l ", $explodeOR[$a]);
-                    //nilai true false
-                    if ($explodeRule[0] > $explodeRule[1]) {
-                        $bol[$a] = "Benar";
-                    } else {
-                        $bol[$a] = "Salah";
-                    }
-                }
-                $a++;
-            }
-            //isi false
-            $bolAND[$n] = "Salah";
-            $b = 0;
-            while ($b < $jmlOR) {
-                //jika $bol[$b] benar bolAND benar
-                if ($bol[$b] == "Benar") {
-                    $bolAND[$n] = "Benar";
-                }
-                $b++;
-            }
-            $n++;
-        }
-        //isi boolrule
-        $boolRule = "Benar";
-        $a = 0;
-        while ($a < $jmlAND) {
-            //jika ada yang salah boolrule diganti salah
-            if ($bolAND[$a] == "Salah") {
-                $boolRule = "Salah";
-            }
-            $a++;
-        }
-        if ($boolRule == "Benar") {
-            $keputusan = $row['keputusan'];
-            $id_rule = $row['id'];
-        }
-        if ($keputusan == '') {
-            $que = mysql_query("SELECT parent FROM t_keputusan");
-            $jml = array();
-            $exParent = array();
-            $i = 0;
-            while ($row_baris = mysql_fetch_array($que)) {
-                $exParent = explode(" AND ", $row_baris['parent']);
-                $jml[$i] = count($exParent);
-                $i++;
-            }
-            $maxParent = max($jml);
-            $sql_query = mysql_query("SELECT * FROM t_keputusan");
-            while ($row_bar = mysql_fetch_array($sql_query)) {
-                $explP = explode(" AND ", $row_bar['parent']);
-                $jmlT = count($explP);
-                if ($jmlT == $maxParent) {
-                    $keputusan = $row_bar['keputusan'];
-                    $id_rule = $row_bar['id'];
-                }
-            }
-        }
-    }
-
-    return array('keputusan' => $keputusan, 'id_rule' => $id_rule);
-}
-
-function klasifikasi_satu_data($jenis_kelamin, $usia_bulan, $berat_badan, $tinggi_badan, $lingkar_kepala) {
-
-    echo "<h4>Hasil...<br><br>";
-    echo "Jenis Kelamin: " . $jenis_kelamin . "<br>";
-    echo "Usia: " . $usia_bulan . " bulan<br>";
-    echo "Berat Badan: " . $berat_badan . " Kg<br>";
-    echo "Tinggi Badan: " . $tinggi_badan . " cm<br>";
-    echo "Lingkar Kepala: " . $lingkar_kepala . " cm<br><br><br></h4>";
-
-    //manggil fungsi nya return nya hasil klasifikasi dan id rule yang terpilih
-    $hasil = klasifikasi($jenis_kelamin, $usia_bulan, $berat_badan, $tinggi_badan, $lingkar_kepala);
-
-    $keputusan = $hasil['keputusan'];
-    $id_rule = $hasil['id_rule'];
-
-    echo "<h1>Hasil Klasifikasi: <br>" . $keputusan . "</h1>";
-    if ($keputusan == '') {
-        //echo "<h4>Rule terpilih adalah rule yang terakhir karena tidak memenuhi semua rule</h4>";
-    } else {
-        $sql_que = mysql_query("SELECT * FROM t_keputusan WHERE id=$id_rule");
-        $row_bar = mysql_fetch_array($sql_que);
-        $rule_terpilih = "IF " . $row_bar[1] . " AND " . $row_bar[2] . " THEN kelas_asli = " . $row_bar[3];
-        echo "<h4>Rule yang terpilih adalah rule ke-" . $row_bar[0] . "<br>" . $rule_terpilih . "</h4>";
-    }
-    //masuk ke db
-    $sql_insert = "INSERT INTO hasil_klasifikasi
-                                    (jenis_kelamin, usia_bulan, berat_badan, tinggi_badan, lingkar_kepala, hasil) VALUES
-                                    ( '$jenis_kelamin', '$usia_bulan', '$berat_badan', '$tinggi_badan','$lingkar_kepala', '$keputusan')";
-
-    mysql_query($sql_insert);
-}
-
 //fungsi hitung rasio
 function hitung_rasio($db_object, $kasus , $atribut , $gain , $nilai1 , $nilai2 , $nilai3 , $nilai4 , $nilai5){				
     $data_kasus = '';
@@ -855,4 +693,138 @@ function hitung_rasio($db_object, $kasus , $atribut , $gain , $nilai1 , $nilai2 
     $opsiMax[1] = $row[3];		
     echo "<br>=========================<br>";
     return $opsiMax;		
+}
+
+
+function klasifikasi($db_object, $n_jenis_kelamin, $n_usia, $n_sekolah, $n_jawaban_a, $n_jawaban_b, $n_jawaban_c, $n_jawaban_d) {
+
+    $sql = $db_object->db_query("SELECT * FROM t_keputusan");
+    $keputusan = $id_rule_keputusan = "";
+    while ($row = $db_object->db_fetch_array($sql)) {
+        //menggabungkan parent dan akar dengan kata AND
+        if ($row['parent'] != '') {
+            $rule = $row['parent'] . " AND " . $row['akar'];
+        } else {
+            $rule = $row['akar'];
+        }
+        //mengubah parameter
+        $rule = str_replace("<=", " k ", $rule);
+        $rule = str_replace("=", " s ", $rule);
+        $rule = str_replace(">", " l ", $rule);
+        //mengganti nilai
+        $rule = str_replace("jenis_kelamin", "'$n_jenis_kelamin'", $rule);
+        $rule = str_replace("usia", "'$n_usia'", $rule);
+        $rule = str_replace("sekolah", "'$n_sekolah'", $rule);
+        $rule = str_replace("jawaban_a", "'$n_jawaban_a'", $rule);
+        $rule = str_replace("jawaban_b", "$n_jawaban_b", $rule);
+        $rule = str_replace("jawaban_c", "$n_jawaban_c", $rule);
+        $rule = str_replace("jawaban_d", "$n_jawaban_d", $rule);
+        //menghilangkan '
+        $rule = str_replace("'", "", $rule);
+        //explode and
+        $explodeAND = explode(" AND ", $rule);
+        $jmlAND = count($explodeAND);
+        //menghilangkan ()
+        $explodeAND = str_replace("(", "", $explodeAND);
+        $explodeAND = str_replace(")", "", $explodeAND);
+        //deklarasi bol
+        $bolAND=array();
+        $n=0;
+        while($n<$jmlAND){
+            //explode or
+            $explodeOR = explode(" OR ",$explodeAND[$n]);
+            $jmlOR = count($explodeOR);	
+            //deklarasi bol
+            $bol=array();
+            $a=0;
+            while($a<$jmlOR){				
+                //pecah  dengan spasi
+                $exrule2 = explode(" ",$explodeOR[$a]);
+                $parameter = $exrule2[1];				
+                if($parameter=='s'){
+                    //pecah  dengan s
+                    $explodeRule = explode(" s ",$explodeOR[$a]);
+                    //nilai true false						
+                    if($explodeRule[0]==$explodeRule[1]){
+                            $bol[$a]="Benar";
+                    }else if($explodeRule[0]!=$explodeRule[1]){
+                            $bol[$a]="Salah";
+                    }
+                }else if($parameter=='k'){
+                    //pecah  dengan k
+                    $explodeRule = explode(" k ",$explodeOR[$a]);
+                    //nilai true false
+                    if($explodeRule[0]<=$explodeRule[1]){
+                            $bol[$a]="Benar";
+                    }else{
+                            $bol[$a]="Salah";
+                    }
+                }else if($parameter=='l'){
+                    //pecah dengan s
+                    $explodeRule = explode(" l ",$explodeOR[$a]);
+                    //nilai true false
+                    if($explodeRule[0]>$explodeRule[1]){
+                            $bol[$a]="Benar";
+                    }else{
+                            $bol[$a]="Salah";
+                    }
+                }				
+                $a++;
+            }
+            //isi false
+            $bolAND[$n]="Salah";
+            $b=0;			
+            while($b<$jmlOR){
+                //jika $bol[$b] benar bolAND benar
+                if($bol[$b]=="Benar"){
+                        $bolAND[$n]="Benar";
+                }
+                $b++;
+            }			
+            $n++;
+        }
+        //isi boolrule
+        $boolRule="Benar";
+        $a=0;
+        while($a<$jmlAND){			
+                //jika ada yang salah boolrule diganti salah
+                if($bolAND[$a]=="Salah"){
+                        $boolRule="Salah";
+                        break;
+                }						
+                $a++;
+        }		
+        if($boolRule=="Benar"){
+            $keputusan=$row['keputusan'];
+            $id_rule_keputusan=$row['id'];
+            break;
+        }
+        //jika tidak ada rule yang memenuhi kondisi data uji 
+        //maka ambil rule paling bawah(ambil konisi yg paling panjang)????....
+        if ($keputusan == '') {
+            $que = $db_object->db_query("SELECT parent FROM t_keputusan");
+            $jml = array();
+            $exParent = array();
+            $i = 0;
+            while ($row_baris = $db_object->db_fetch_array($que)) {
+                $exParent = explode(" AND ", $row_baris['parent']);
+                $jml[$i] = count($exParent);
+                $i++;
+            }
+            $maxParent = max($jml);
+            $sql_query = $db_object->db_query("SELECT * FROM t_keputusan");
+            while ($row_bar = $db_object->db_fetch_array($sql_query)) {
+                $explP = explode(" AND ", $row_bar['parent']);
+                $jmlT = count($explP);
+                if ($jmlT == $maxParent) {
+                    $keputusan = $row_bar['keputusan'];
+                    $id_rule[$it] = $row_bar['id'];
+                    $id_rule_keputusan = $row_bar['id'];
+                    break;
+                }
+            }
+        }
+    }//end loop t_keputusan
+
+    return array('keputusan' => $keputusan, 'id_rule' => $id_rule_keputusan);
 }

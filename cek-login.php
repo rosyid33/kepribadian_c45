@@ -2,7 +2,7 @@
 session_start(); // harus ada di bagian paling atas kode
 $path_to_root = "";
 include $path_to_root . 'database.php';
-
+include_once $path_to_root.'fungsi.php';
 //object database class
 $db = new database();
 
@@ -22,6 +22,7 @@ if ($num_rows > 0) {
         $_SESSION['kepribadian_c45_nama'] = $rows['nama'];
         $_SESSION['kepribadian_c45_username'] = $rows['username'];
         $_SESSION['kepribadian_c45_level'] = $rows['level'];
+        $_SESSION['kepribadian_c45_id_siswa'] = get_id_siswa_by_id_user($db, $rows['id_user']);
 
         $level_name = ($_SESSION['kepribadian_c45_level']==1)?"guru":"siswa";
         $_SESSION['kepribadian_c45_level_name'] = $level_name;

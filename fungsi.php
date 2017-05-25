@@ -4,11 +4,42 @@ function can_access_menu($menu){
     if($_SESSION['kepribadian_c45_level']==2 & ($menu=='klasifikasi')){// || $menu=='view_rule')){
         return true;
     }
-    if($_SESSION['kepribadian_c45_level']==1){
+    if($_SESSION['kepribadian_c45_level']==1 & $menu!='klasifikasi'){
         return true;
     }
     return false;
 }
+
+function sudah_klasifikasi($db_object, $id_siswa){
+    $sql = "SELECT COUNT(*) FROM jawaban_kuisioner "
+            . " WHERE id_siswa = ".$id_siswa;
+    $result = $db_object->db_query($sql);
+    $row = $db_object->db_fetch_array($result);
+    return $row[0]>0;
+}
+
+function get_hasil_klasifikasi($db_object, $id_siswa){
+    $sql = "SELECT * FROM data_hasil_klasifikasi WHERE id_siswa = ".$id_siswa;
+    $result = $db_object->db_query($sql);
+    $row = $db_object->db_fetch_array($result);
+    return $row;
+}
+
+function get_data_siswa($db_object, $id_siswa){
+    $sql = "SELECT * FROM data_siswa "
+            . " WHERE id=".$id_siswa;
+    $result = $db_object->db_query($sql);
+    $row = $db_object->db_fetch_array($result);
+    return $row;
+}
+
+function get_id_siswa_by_id_user($db, $id_user){
+    $sql = "SELECT id FROM data_siswa WHERE id_user = ".$id_user;
+    $result = $db->db_query($sql);
+    $row = $db->db_fetch_array($result);
+    return (!empty($row['id'])?$row['id']:0);
+}
+
 //START USERS===================================================================
 /**
  * combobox list users dengan text didepannya (for input form)

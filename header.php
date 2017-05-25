@@ -29,14 +29,7 @@ if(isset($_GET['menu'])){
                                 else{
                                     if(($_SESSION['kepribadian_c45_level'])==2){
                                     ?>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">C4.5<b class="caret"></b></a>
-                                            <ul class="dropdown-menu ">
-                                                <ul class="multi-column-dropdown">
-                                                <li><a href="index.php?menu=klasifikasi">Klasifikasi</a></li>
-                                                </ul>
-                                            </ul>
-                                        </li>
+                                    <li class="active"><a href="index.php?menu=klasifikasi" class="act">Klasifikasi</a></li>
                                     <?php
                                     }
                                     else{
@@ -49,7 +42,7 @@ if(isset($_GET['menu'])){
                                                 <ul class="multi-column-dropdown">
                                                     <li><a href="index.php?menu=mining">Mining</a></li>
                                                     <li><a href="index.php?menu=pohon_keputusan">Pohon Keputusan</a></li>
-                                                    <li><a href="index.php?menu=klasifikasi">Klasifikasi</a></li>
+                                                    
                                                 </ul>
                                             </ul>
                                         </li>

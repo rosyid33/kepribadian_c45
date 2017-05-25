@@ -12,10 +12,6 @@ MySQL - 10.1.16-MariaDB : Database - kepribadian_c45
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`kepribadian_c45` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `kepribadian_c45`;
-
 /*Table structure for table `data_hasil_klasifikasi` */
 
 DROP TABLE IF EXISTS `data_hasil_klasifikasi`;
@@ -33,9 +29,12 @@ CREATE TABLE `data_hasil_klasifikasi` (
   `kelas_hasil` varchar(100) DEFAULT NULL,
   `id_rule` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `data_hasil_klasifikasi` */
+
+insert  into `data_hasil_klasifikasi`(`id`,`id_siswa`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_hasil`,`id_rule`) values 
+(1,1,'L',15,'Swasta',4,10,5,21,'Plegmatis',1);
 
 /*Table structure for table `data_latih` */
 
@@ -260,16 +259,16 @@ CREATE TABLE `data_uji` (
 /*Data for the table `data_uji` */
 
 insert  into `data_uji`(`id`,`nama`,`jenis_kelamin`,`usia`,`sekolah`,`jawaban_a`,`jawaban_b`,`jawaban_c`,`jawaban_d`,`kelas_asli`,`kelas_hasil`,`id_rule`) values 
-(1,'Mafaza Al-Aufa','L',13,'Swasta',5,7,15,13,'Melankolis','Plegmatis',4),
-(2,'Farhan Syah','L',13,'Swasta',8,13,8,11,'Koleris','Sanguin',11),
-(3,'Hilmi Tajudin','L',15,'Swasta',5,4,14,17,'Plegmatis','Plegmatis',4),
-(4,'Firyal Aqillah Tahaani','P',13,'Swasta',13,10,9,8,'Sanguin','Sanguin',5),
-(5,'Abidah Mukhlishoh','P',14,'Swasta',7,3,13,17,'Plegmatis','Sanguin',11),
-(6,'Moch. Yoland Pradana','L',13,'Negeri',6,16,4,14,'Koleris','Sanguin',11),
-(7,'Syifa Arrosyid','L',14,'Negeri',18,7,8,7,'Sanguin','Sanguin',5),
-(8,'Barkatul Mirojiah','P',14,'Negeri',13,9,7,11,'Sanguin','Sanguin',11),
+(1,'Mafaza Al-Aufa','L',13,'Swasta',5,7,15,13,'Melankolis','Plegmatis',8),
+(2,'Farhan Syah','L',13,'Swasta',8,13,8,11,'Koleris','Koleris',4),
+(3,'Hilmi Tajudin','L',15,'Swasta',5,4,14,17,'Plegmatis','Plegmatis',8),
+(4,'Firyal Aqillah Tahaani','P',13,'Swasta',13,10,9,8,'Sanguin','Sanguin',14),
+(5,'Abidah Mukhlishoh','P',14,'Swasta',7,3,13,17,'Plegmatis','Plegmatis',9),
+(6,'Moch. Yoland Pradana','L',13,'Negeri',6,16,4,14,'Koleris','Koleris',4),
+(7,'Syifa Arrosyid','L',14,'Negeri',18,7,8,7,'Sanguin','Sanguin',14),
+(8,'Barkatul Mirojiah','P',14,'Negeri',13,9,7,11,'Sanguin','Sanguin',28),
 (9,'Tiara Rossabilla ','P',14,'Negeri',6,6,10,18,'Plegmatis','Plegmatis',1),
-(10,'Risma Dewi Septiawati','P',14,'Negeri',10,5,14,11,'Melankolis','Sanguin',11);
+(10,'Risma Dewi Septiawati','P',14,'Negeri',10,5,14,11,'Melankolis','Plegmatis',9);
 
 /*Table structure for table `gain` */
 
@@ -305,6 +304,63 @@ insert  into `gain`(`id`,`node_id`,`atribut`,`gain`) values
 (17,1,'Jawaban D v=15',0),
 (18,1,'Jawaban D v=20',0);
 
+/*Table structure for table `jawaban_kuisioner` */
+
+DROP TABLE IF EXISTS `jawaban_kuisioner`;
+
+CREATE TABLE `jawaban_kuisioner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL DEFAULT '0',
+  `id_siswa` int(11) NOT NULL DEFAULT '0',
+  `id_soal` int(11) NOT NULL DEFAULT '0',
+  `jawaban` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+
+/*Data for the table `jawaban_kuisioner` */
+
+insert  into `jawaban_kuisioner`(`id`,`id_user`,`id_siswa`,`id_soal`,`jawaban`) values 
+(1,2,1,1,'A'),
+(2,2,1,2,'A'),
+(3,2,1,3,'D'),
+(4,2,1,4,'B'),
+(5,2,1,5,'B'),
+(6,2,1,6,'D'),
+(7,2,1,7,'B'),
+(8,2,1,8,'D'),
+(9,2,1,9,'C'),
+(10,2,1,10,'D'),
+(11,2,1,11,'B'),
+(12,2,1,12,'C'),
+(13,2,1,13,'D'),
+(14,2,1,14,'A'),
+(15,2,1,15,'D'),
+(16,2,1,16,'B'),
+(17,2,1,17,'D'),
+(18,2,1,18,'B'),
+(19,2,1,19,'B'),
+(20,2,1,20,'B'),
+(21,2,1,21,'D'),
+(22,2,1,22,'D'),
+(23,2,1,23,'D'),
+(24,2,1,24,'D'),
+(25,2,1,25,'D'),
+(26,2,1,26,'D'),
+(27,2,1,27,'D'),
+(28,2,1,28,'C'),
+(29,2,1,29,'A'),
+(30,2,1,30,'D'),
+(31,2,1,31,'B'),
+(32,2,1,32,'D'),
+(33,2,1,33,'C'),
+(34,2,1,34,'D'),
+(35,2,1,35,'B'),
+(36,2,1,36,'D'),
+(37,2,1,37,'D'),
+(38,2,1,38,'D'),
+(39,2,1,39,'C'),
+(40,2,1,40,'D');
+
 /*Table structure for table `rasio_gain` */
 
 DROP TABLE IF EXISTS `rasio_gain`;
@@ -316,9 +372,14 @@ CREATE TABLE `rasio_gain` (
   `cabang2` varchar(50) DEFAULT NULL,
   `rasio_gain` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `rasio_gain` */
+
+insert  into `rasio_gain`(`id`,`opsi`,`cabang1`,`cabang2`,`rasio_gain`) values 
+(1,'opsi1','14','13 , 15',0.574),
+(2,'opsi2','13','15 , 14',0.385),
+(3,'opsi3','15','14 , 13',0.574);
 
 /*Table structure for table `t_keputusan` */
 
@@ -330,27 +391,44 @@ CREATE TABLE `t_keputusan` (
   `akar` text,
   `keputusan` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 /*Data for the table `t_keputusan` */
 
 insert  into `t_keputusan`(`id`,`parent`,`akar`,`keputusan`) values 
 (1,'(jawaban_a<=10) AND (jawaban_c<=10)','(jawaban_b<=10)','Plegmatis'),
 (2,'(jawaban_a<=10) AND (jawaban_c<=10) AND (jawaban_b>10)','(jawaban_d<=10)','Koleris'),
-(3,'(jawaban_a<=10) AND (jawaban_c>10)','(jawaban_d<=10)','Melankolis'),
-(4,'(jawaban_a<=10) AND (jawaban_c>10) AND (jawaban_d>10)','(jenis_kelamin=\'L\')','Plegmatis'),
-(5,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10)','(jawaban_c<=10)','Sanguin'),
-(6,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10) AND (jawaban_c>10)','(jawaban_c>15)','Melankolis'),
-(7,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d<=5)','(jawaban_a<=15)','Koleris'),
-(8,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d<=5)','(jawaban_a>15)','Sanguin'),
-(9,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15)','(jawaban_c<=5)','Plegmatis'),
-(10,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15) AND (jawaban_c>5)','(jenis_kelamin=\'L\')','Sanguin'),
-(11,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15) AND (jawaban_c>5) AND (jenis_kelamin=\'P\')','(sekolah=\'Negeri\')','Sanguin'),
-(12,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15) AND (jawaban_c>5) AND (jenis_kelamin=\'P\')','(sekolah=\'Swasta\')','Plegmatis'),
-(13,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15)','(jawaban_a>15)','Sanguin'),
-(14,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10)','(jawaban_d>15)','Plegmatis'),
-(15,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c>10)','(jenis_kelamin=\'L\')','Melankolis'),
-(16,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c>10)','(jenis_kelamin=\'P\')','Plegmatis');
+(3,'(jawaban_a<=10) AND (jawaban_c<=10) AND (jawaban_b>10) AND (jawaban_d>10)','(usia=\'14\')','Koleris'),
+(4,'(jawaban_a<=10) AND (jawaban_c<=10) AND (jawaban_b>10) AND (jawaban_d>10) AND (usia=\'13\' OR usia=\'15\') AND (usia=\'13\')','(jenis_kelamin=\'L\')','Koleris'),
+(5,'(jawaban_a<=10) AND (jawaban_c<=10) AND (jawaban_b>10) AND (jawaban_d>10) AND (usia=\'13\' OR usia=\'15\') AND (usia=\'13\')','(jenis_kelamin=\'P\')','Koleris'),
+(6,'(jawaban_a<=10) AND (jawaban_c<=10) AND (jawaban_b>10) AND (jawaban_d>10) AND (usia=\'13\' OR usia=\'15\')','(usia=\'15\')','Plegmatis'),
+(7,'(jawaban_a<=10) AND (jawaban_c>10)','(jawaban_d<=10)','Melankolis'),
+(8,'(jawaban_a<=10) AND (jawaban_c>10) AND (jawaban_d>10)','(jenis_kelamin=\'L\')','Plegmatis'),
+(9,'(jawaban_a<=10) AND (jawaban_c>10) AND (jawaban_d>10) AND (jenis_kelamin=\'P\')','(usia=\'14\')','Plegmatis'),
+(10,'(jawaban_a<=10) AND (jawaban_c>10) AND (jawaban_d>10) AND (jenis_kelamin=\'P\') AND (usia=\'13\' OR usia=\'15\') AND (usia=\'13\') AND (sekolah=\'Negeri\')','(jawaban_a<=5)','Plegmatis'),
+(11,'(jawaban_a<=10) AND (jawaban_c>10) AND (jawaban_d>10) AND (jenis_kelamin=\'P\') AND (usia=\'13\' OR usia=\'15\') AND (usia=\'13\') AND (sekolah=\'Negeri\')','(jawaban_a>5)','Melankolis'),
+(12,'(jawaban_a<=10) AND (jawaban_c>10) AND (jawaban_d>10) AND (jenis_kelamin=\'P\') AND (usia=\'13\' OR usia=\'15\') AND (usia=\'13\')','(sekolah=\'Swasta\')','Melankolis'),
+(13,'(jawaban_a<=10) AND (jawaban_c>10) AND (jawaban_d>10) AND (jenis_kelamin=\'P\') AND (usia=\'13\' OR usia=\'15\')','(usia=\'15\')','Plegmatis'),
+(14,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10)','(jawaban_c<=10)','Sanguin'),
+(15,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10) AND (jawaban_c>10) AND (jawaban_c<=15) AND (usia=\'14\')','(jenis_kelamin=\'L\')','Sanguin'),
+(16,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10) AND (jawaban_c>10) AND (jawaban_c<=15) AND (usia=\'14\') AND (jenis_kelamin=\'P\')','(jawaban_a<=15)','Melankolis'),
+(17,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10) AND (jawaban_c>10) AND (jawaban_c<=15) AND (usia=\'14\') AND (jenis_kelamin=\'P\')','(jawaban_a>15)','Sanguin'),
+(18,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10) AND (jawaban_c>10) AND (jawaban_c<=15)','(usia=\'13\')','Sanguin'),
+(19,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b<=10) AND (jawaban_c>10)','(jawaban_c>15)','Melankolis'),
+(20,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d<=5)','(jawaban_a<=15)','Koleris'),
+(21,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d<=5)','(jawaban_a>15)','Sanguin'),
+(22,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d>5)','(usia=\'13\')','Sanguin'),
+(23,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d>5) AND (usia=\'14\') AND (sekolah=\'Negeri\')','(jenis_kelamin=\'L\')','Sanguin'),
+(24,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d>5) AND (usia=\'14\') AND (sekolah=\'Negeri\')','(jenis_kelamin=\'P\')','Sanguin'),
+(25,'(jawaban_a>10) AND (jawaban_d<=10) AND (jawaban_b>10) AND (jawaban_d>5) AND (usia=\'14\')','(sekolah=\'Swasta\')','Sanguin'),
+(26,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15)','(jawaban_c<=5)','Plegmatis'),
+(27,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15) AND (jawaban_c>5)','(jenis_kelamin=\'L\')','Sanguin'),
+(28,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15) AND (jawaban_c>5) AND (jenis_kelamin=\'P\')','(sekolah=\'Negeri\')','Sanguin'),
+(29,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15) AND (jawaban_a<=15) AND (jawaban_c>5) AND (jenis_kelamin=\'P\')','(sekolah=\'Swasta\')','Plegmatis'),
+(30,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10) AND (jawaban_d<=15)','(jawaban_a>15)','Sanguin'),
+(31,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c<=10)','(jawaban_d>15)','Plegmatis'),
+(32,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c>10)','(jenis_kelamin=\'L\')','Melankolis'),
+(33,'(jawaban_a>10) AND (jawaban_d>10) AND (jawaban_c>10)','(jenis_kelamin=\'P\')','Plegmatis');
 
 /*Table structure for table `users` */
 
