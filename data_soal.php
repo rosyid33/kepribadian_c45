@@ -1,6 +1,6 @@
 <?php
 //session_start();
-if (!isset($_SESSION['kepribadian_naive_bayes_id'])) {
+if (!isset($_SESSION['kepribadian_c45_id'])) {
     header("location:index.php?menu=forbidden");
 }
 
