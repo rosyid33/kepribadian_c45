@@ -161,6 +161,18 @@ include_once "proses_mining.php";
                     //echo "<br>";
                 } 
                 else {
+
+                    if($jumlah <= 0){
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<center>"
+                        . "<h3 class='typoh2'>"
+                                . "Soal Kuisioner belum ada"
+                        . "</h3>"
+                        . "</center>";
+                    }
+                    else{
                     ?>
                     <!--UPLOAD EXCEL FORM-->
                     <form method="post" action="">
@@ -192,15 +204,16 @@ include_once "proses_mining.php";
                                     <?php echo $row['pilihan_d']; ?>
                                 </label>
                             </div>
-            <?php
-        }
-        ?>
+                        <?php
+                    }
+                    ?>
 
                         <div class="form-group">
                             <input name="submit" type="submit" value="Submit" class="btn btn-success">
                         </div>
                     </form>
                         <?php
+                    }
                     }
                 }
                 ?>

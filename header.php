@@ -35,7 +35,7 @@ if(isset($_GET['menu'])){
                                     else{
                                     ?>
                                         <li class="active"><a href="index.php?menu=data_siswa" class="act">Data siswa</a></li>
-
+                                        <li class="active"><a href="index.php?menu=data_soal" class="act">Data Soal</a></li>
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">C4.5<b class="caret"></b></a>
                                             <ul class="dropdown-menu ">
