@@ -25,6 +25,15 @@ function get_hasil_klasifikasi($db_object, $id_siswa){
     return $row;
 }
 
+function get_id_user_siswa($db_object, $id_siswa){
+    $sql = "SELECT id_user FROM data_siswa "
+            . " WHERE id=".$id_siswa;
+    $result = $db_object->db_query($sql);
+    $row = $db_object->db_fetch_array($result);
+    return $row[0];
+}
+
+
 function get_data_siswa($db_object, $id_siswa){
     $sql = "SELECT * FROM data_siswa "
             . " WHERE id=".$id_siswa;
