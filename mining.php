@@ -20,14 +20,16 @@ if (isset($_POST['submit'])) {
     //import data excel dari baris kedua, karena baris pertama adalah nama kolom
     // $temp_date = $temp_produk = "";
     for ($i = 2; $i <= $baris; $i++) {
-        $value = "(\"" . $data->val($i, 2) . "\", '" . $data->val($i, 3) . "', "
-                . $data->val($i, 4) . ", '" . $data->val($i, 5) . "', "
-                . $data->val($i, 6) . ", " . $data->val($i, 7) . ", "
-                . $data->val($i, 8) . ", " . $data->val($i, 9) . ", '" . $data->val($i, 10) . "')";
-        $sql = "INSERT INTO data_latih "
-                . " (nama, jenis_kelamin, usia, sekolah, jawaban_a, jawaban_b, jawaban_c, jawaban_d, kelas_asli)"
-                . " VALUES " . $value;
-        $result = $db_object->db_query($sql);
+        if(!empty($data->val($i, 2))){
+            $value = "(\"" . $data->val($i, 2) . "\", '" . $data->val($i, 3) . "', "
+                    . $data->val($i, 4) . ", '" . $data->val($i, 5) . "', "
+                    . $data->val($i, 6) . ", " . $data->val($i, 7) . ", "
+                    . $data->val($i, 8) . ", " . $data->val($i, 9) . ", '" . $data->val($i, 10) . "')";
+            $sql = "INSERT INTO data_latih "
+                    . " (nama, jenis_kelamin, usia, sekolah, jawaban_a, jawaban_b, jawaban_c, jawaban_d, kelas_asli)"
+                    . " VALUES " . $value;
+            $result = $db_object->db_query($sql);
+        }
     }
     if ($result) {
         ?>
